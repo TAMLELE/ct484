@@ -20,8 +20,10 @@ class MyApp extends StatelessWidget {
               ColorScheme.fromSwatch(primarySwatch: Colors.purple).copyWith(
             secondary: Colors.deepOrange,
           )),
-      home: Container(
-        color: Colors.green,
+      home: SafeArea(
+        child: ProductDetailScreen(
+          ProductManager().items[0],
+        ),
       ),
     );
   }
