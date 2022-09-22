@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:myshop/ui/orders/order_manager.dart';
+import 'orders_manager.dart';
 import 'order_item_card.dart';
 import '../shared/app_drawer.dart';
 
