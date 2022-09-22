@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'user_product_list_tile.dart';
-import 'products_manager.dart';
+import 'product_manager.dart';
 
 class UserProductsScreen extends StatelessWidget {
   static const routeName = '/user-products';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myshop/ui/screens.dart';
-import 'product_grid.dart';
+import 'package:myshop/ui/cart/cart_manager.dart';
+import 'products_grid.dart';
 import '../shared/app_drawer.dart';
 
 enum FilterOptions { favorites, all }
