@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'ui/products/products_manager.dart';
-import 'ui/products/products_detail_screen.dart';
-import 'ui/cart/cart_screen.dart';
-import 'ui/orders/orders_screen.dart';
+import 'package:myshop/ui/products/products_manager.dart';
+
+import 'ui/screens.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,15 +21,31 @@ class MyApp extends StatelessWidget {
               ColorScheme.fromSwatch(primarySwatch: Colors.purple).copyWith(
             secondary: Colors.deepOrange,
           )),
-      home: const SafeArea(
-        child: OrdersScreen(),
-      ),
+      home: const ProductsOverViewScreen(),
+      routes: {
+        CartScreen.routeName: (ctx) => const CartScreen(),
+        OrdersScreen.routeName: (ctx) => const OrdersScreen(),
+        UserProductsScreen.routeName: (ctx) => const UserProductsScreen(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == ProductDetailScreen.routeName) {
+          final productId = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (ctx) {
+              return ProductDetailScreen(
+                ProductManager().findById(productId),
+              );
+            },
+          );
+        }
+        return null;
+      },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
