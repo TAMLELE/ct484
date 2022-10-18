@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myshop/ui/shared/app_drawer.dart';
+import 'package:provider/provider.dart';
 
 import 'user_product_list_tile.dart';
 import 'product_manager.dart';
@@ -18,25 +20,32 @@ class UserProductsScreen extends StatelessWidget {
           buildAddButton(),
         ],
       ),
+      drawer: const AppDrawer(),
       body: RefreshIndicator(
         onRefresh: () async => print('refresh products'),
         child: buildUserProductListView(productsManager),
       ),
+    
+    
     );
+    
   }
 
-  Widget buildUserProductListView(ProductManager productsManager) {
-    return ListView.builder(
-      itemCount: productsManager.itemCount,
-      itemBuilder: (ctx, i) => Column(
-        children: [
-          UserProductListTile(
-            productsManager.items[i],
-          ),
-          const Divider(),
-        ],
-      ),
-    );
+   Widget buildUserProductListView(productsManager) {
+    return Consumer<ProductManager>(
+      builder: (ctx, productsManager, child) {
+      return ListView.builder(
+        itemCount: productsManager.itemCount,
+        itemBuilder: (ctx, i) => Column(
+          children: [
+            UserProductListTile(
+              productsManager.items[i],
+            ),
+            const Divider(),
+          ],
+        ),
+      );
+    });
   }
 
   Widget buildAddButton() {
