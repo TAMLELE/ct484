@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:myshop/ui/orders/orders_screen.dart';
+import 'package:myshop/ui/products/edit_product_screen.dart';
+
+import 'package:myshop/ui/products/user_products_screen.dart';
 import 'package:provider/provider.dart';
 import 'ui/screens.dart';
 
@@ -17,7 +21,7 @@ class MyApp extends StatelessWidget {
           create: (ctx) => ProductManager(),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => CartManager(),
+          create: (cxt) => CartManager(),
         ),
         ChangeNotifierProvider(
           create: (ctx) => OrdersManager(),
@@ -44,7 +48,19 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(
               builder: (ctx) {
                 return ProductDetailScreen(
-                  ProductManager().findById(productId),
+                  ctx.read<ProductManager>().findById(productId),
+                );
+              },
+            );
+          }
+          if (settings.name == EditProductScreen.routeName) {
+            final productId = settings.arguments as String?;
+            return MaterialPageRoute(
+              builder: (ctx) {
+                return EditProductScreen(
+                  productId != null
+                      ? ctx.read<ProductManager>().findById(productId)
+                      : null,
                 );
               },
             );
@@ -136,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

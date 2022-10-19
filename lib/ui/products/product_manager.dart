@@ -85,4 +85,6 @@ class ProductManager with ChangeNotifier {
   List<Product> get favoriteItems {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
+
+  void addProduct(Product editedProduct) {}
 }
