@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../models/cart_item.dart';
-
 import '../../models/order_item.dart';
 
 class OrdersManager with ChangeNotifier {
@@ -10,12 +9,7 @@ class OrdersManager with ChangeNotifier {
       id: 'o1',
       amount: 59.98,
       products: [
-        CartItem(
-          id: 'c1',
-          title: 'Red Shirt',
-          price: 29.99,
-          quantity: 2,
-        )
+        CartItem(id: 'c1', title: 'Red Shirt', quantity: 2, price: 29.99)
       ],
       dateTime: DateTime.now(),
     )
@@ -29,5 +23,16 @@ class OrdersManager with ChangeNotifier {
     return [..._orders];
   }
 
-  void addOrder(List<CartItem> products, double totalAmount) {}
+  void addOrder(List<CartItem> cartProducts, double total) {
+    _orders.insert(
+      0,
+      OrderItem(
+        id: 'o${DateTime.now().toIso8601String()}',
+        amount: total,
+        products: cartProducts,
+        dateTime: DateTime.now(),
+      ),
+    );
+    notifyListeners();
+  }
 }
