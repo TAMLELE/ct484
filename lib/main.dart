@@ -22,8 +22,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AuthManager(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProxyProvider<AuthManager, ProductManager>(
           create: (ctx) => ProductManager(),
+          update: (ctx, authManager, productsManager) {
+            // Khi authManager có báo hiệu thay đổi thì đọc lại authToken
+            // cho productManager
+            productsManager!.authToken = authManager.authToken;
+            return productsManager;
+          },
         ),
         ChangeNotifierProvider(
           create: (cxt) => CartManager(),
@@ -43,7 +49,7 @@ class MyApp extends StatelessWidget {
                 secondary: Colors.deepOrange,
               )),
           home: authManager.isAuth
-              ? const ProductsOverViewScreen()
+              ? const ProductsOverviewScreen()
               : FutureBuilder(
                   future: authManager.tryAutoLogin(),
                   builder: (ctx, snapshot) {
